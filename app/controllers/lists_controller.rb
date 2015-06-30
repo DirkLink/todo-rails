@@ -1,9 +1,10 @@
 class ListsController < ApplicationController
+  
   def show
-    @list = List.find params[:id]
+    @list = current_user.lists.find params[:id]
   end
 
   def index
-    @lists = List.all
+    @lists = current_user.lists
   end
 end

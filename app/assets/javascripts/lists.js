@@ -33,14 +33,27 @@ $(document).on("ready", function(){
         },
         error: errorHandler,
         success: function(data) {
-          var new_item = $("<li class='task' data-task-id='" + data.id + "'>" + data.content + "</li>")
+          var new_item = $("<li class='task' data-task-id='" + data.id + "'>" + data.content + "<button>delete</button></li>")
 
           new_item.on("click", taskClickHandler)
 
           $("ul.task-list").append(new_item)
+
         }
       })
+      $(this).val('')
     }
   })
 
+  $("ul").on("click", "button", function() {
+    var list_id = $("input").data("list-id")
+    var task_id = $(this).parent().data("task-id")
+    $(this).parent().remove()
+    $.ajax("/lists/" + list_id + "/tasks/" + task_id, {
+        method: "DELETE",
+        error: errorHandler,
+        success: function() {   
+        }
+      })
+  })
 })
